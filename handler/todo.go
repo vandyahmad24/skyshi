@@ -21,10 +21,19 @@ func NewTodoHandler(todoService todo.Service) *todoHandler {
 	}
 }
 
+type structKosong struct {
+}
+
 func (h *todoHandler) ListTodo(c *gin.Context) {
 	result, err := h.todoService.GetAll(c)
 	if err != nil {
 		response := helper.ApiResponse("Not Found", "Todo not found", nil)
+		c.JSON(http.StatusOK, response)
+		return
+	}
+
+	if len(result) == 0 {
+		response := helper.ApiResponse("Success", "Success", structKosong{})
 		c.JSON(http.StatusOK, response)
 		return
 	}
@@ -57,6 +66,7 @@ func (h *todoHandler) CreateTodo(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
+
 	fmt.Println(input)
 	newCashier, err := h.todoService.CreateActivity(&input)
 	if err != nil {

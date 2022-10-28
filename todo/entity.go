@@ -6,7 +6,7 @@ import (
 
 type Todo struct {
 	Id              int        `json:"id"`
-	ActivityGroupId string     `json:"activity_group_id"`
+	ActivityGroupId int        `json:"activity_group_id"`
 	IsActive        string     `json:"is_active"`
 	Title           string     `json:"title"`
 	Priority        string     `json:"priority"`

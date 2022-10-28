@@ -3,7 +3,6 @@ package todo
 import (
 	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -32,6 +31,7 @@ func (s *service) GetAll(c *gin.Context) ([]Todo, error) {
 	if err != nil {
 		return activity, err
 	}
+
 	return activity, err
 }
 
@@ -41,7 +41,7 @@ func (s *service) GetById(id int) (Todo, error) {
 		return activity, err
 	}
 	if activity.Id == 0 {
-		return activity, errors.New(fmt.Sprintf("Activity with ID %d Not Found", id))
+		return activity, errors.New(fmt.Sprintf("Todo with ID %d Not Found", id))
 	}
 	return activity, err
 }
@@ -50,9 +50,9 @@ func (s *service) CreateActivity(input *InputTodo) (*Todo, error) {
 
 	cashier := Todo{
 		Title:           input.Title,
-		ActivityGroupId: strconv.Itoa(input.ActivityGroupId),
+		ActivityGroupId: input.ActivityGroupId,
 		IsActive:        "1",
-		Priority:        "very-hight",
+		Priority:        "very-high",
 	}
 	newCashier, err := s.repository.Create(&cashier)
 	if err != nil {
@@ -65,7 +65,7 @@ func (s *service) CreateActivity(input *InputTodo) (*Todo, error) {
 func (s *service) UpdateTodo(id int, input *InputTodo) (*Todo, error) {
 	cashier := Todo{
 		Title:           input.Title,
-		ActivityGroupId: strconv.Itoa(input.ActivityGroupId),
+		ActivityGroupId: input.ActivityGroupId,
 	}
 	newCashier, err := s.repository.Update(id, &cashier)
 	if err != nil {
