@@ -64,7 +64,7 @@ func (h *activityHandler) CreateActivity(c *gin.Context) {
 		return
 	}
 	response := helper.ApiResponse("Success", "Success", newCashier)
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusCreated, response)
 	return
 
 }
@@ -87,17 +87,17 @@ func (h *activityHandler) DeleteActivity(c *gin.Context) {
 
 func (h *activityHandler) UpdateActivity(c *gin.Context) {
 	var input activity.InputActivity
-	err := c.ShouldBindJSON(&input)
-	if err != nil {
-		response := helper.FormatErrorValidation(err)
-		c.JSON(http.StatusBadRequest, response)
-		return
-	}
+	// err := c.ShouldBindJSON(&input)
+	// if err != nil {
+	// 	response := helper.FormatErrorValidation(err)
+	// 	c.JSON(http.StatusNotFound, response)
+	// 	return
+	// }
 	fmt.Println("input ", input)
 
 	id := c.Param("activityId")
 	idInt, _ := strconv.Atoi(id)
-	_, err = h.activityService.GetById(idInt)
+	_, err := h.activityService.GetById(idInt)
 	if err != nil {
 		fmt.Println("Error ", err)
 		response := helper.ApiResponse("Not Found", err.Error(), nil)
@@ -108,7 +108,7 @@ func (h *activityHandler) UpdateActivity(c *gin.Context) {
 	res, err := h.activityService.UpdateCashier(idInt, &input)
 	if err != nil {
 		response := helper.ApiResponse("failed", err.Error(), nil)
-		c.JSON(http.StatusBadRequest, response)
+		c.JSON(http.StatusNotFound, response)
 		return
 	}
 

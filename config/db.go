@@ -6,7 +6,6 @@ import (
 	"os"
 	"time"
 	"vandyahmad/skyshi/migration"
-	"vandyahmad/skyshi/seeder"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -57,8 +56,8 @@ func InitMigrate() {
 
 func InitSeeder() {
 	fmt.Println("Jalankan Seeder")
-	seeder := seeder.NewSeeder(DB)
-	seeder.ActivitySeeder()
-	seeder.TodoSeeder()
+	// seeder := seeder.NewSeeder(DB)
+	// seeder.ActivitySeeder()
+	// seeder.TodoSeeder()
 	fmt.Println("Selesai Seeder")
 }

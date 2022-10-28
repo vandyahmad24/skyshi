@@ -65,7 +65,7 @@ func (h *todoHandler) CreateTodo(c *gin.Context) {
 		return
 	}
 	response := helper.ApiResponse("Success", "Success", newCashier)
-	c.JSON(http.StatusOK, response)
+	c.JSON(http.StatusCreated, response)
 	return
 
 }
@@ -91,7 +91,7 @@ func (h *todoHandler) UpdateTodo(c *gin.Context) {
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		response := helper.FormatErrorValidation(err)
-		c.JSON(http.StatusBadRequest, response)
+		c.JSON(http.StatusNotFound, response)
 		return
 	}
 	fmt.Println("input ", input)
@@ -109,7 +109,7 @@ func (h *todoHandler) UpdateTodo(c *gin.Context) {
 	res, err := h.todoService.UpdateTodo(idInt, &input)
 	if err != nil {
 		response := helper.ApiResponse("failed", err.Error(), nil)
-		c.JSON(http.StatusBadRequest, response)
+		c.JSON(http.StatusNotFound, response)
 		return
 	}
 
